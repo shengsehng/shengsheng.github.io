@@ -21,6 +21,13 @@
         background-color: #1e10e3;
         margin: 2px;
         border-radius: 8px;
+        }
+        main{
+            height: 65%;
+            background-color: #e00c0c;
+        }
+        button{
+            padding: 0.2cm;
         }   
     </style> 
     <script>
@@ -29,29 +36,64 @@
 </head>
 <body>
     <header>
-头部
+头部:CET-6
     </header>
+    <main>
+        <p id="en">abandon</p>
+        <p id="pr">/a'bandan</p>
+        <p id="cn">vt.</p>
+    </main>
+    <button id="loadCet">读入单词</button>
+    <button id="randWord">随机单词</button>
     <div>
 盒子
     </div>
     <footer>
-注脚
+注脚：江西科技师范大学李应松
     </footer>
     <script>
         let  mybody=document.querySelector("body");
         mybody.style.height = innerHeight + 'px';
-        //document.body.style.height=innerHeight - 18 + 'px';
+        document.body.style.height=innerHeight - 18 + 'px';
         let luckN = Math.random() * 100;
         let mainDom = document.querySelector('footer');
         mainDom.textContent = '你的幸运数：' + luckN;
         console.log(luckN) ;
-        console.log("渲染web页元素:" + (new Date()-lys) + "-ms!");
+        console.log("渲染web页元素:" + (new Date()-lys) + "ms!");
         let timer=new Date();
         for(let i=1;i<=1e8;i++){
         }
-        console.log("CPU从1数到1亿:"+ (new Date()-timer) + "-ms!");
+        console.log("CPU从1数到1亿:"+ (new Date()-timer) + "ms!");
         let headerDom=document.querySelector('header');
         headerDom.textContent = "整个执行完毕，费时：" +  ( new Date() - lys)+ 'ms';
+        let loadCet=select("button#loadCet");
+        loadCet.onclick=function(){
+            fetch('cet6.txt')
+            .then(res=>res.text())
+            .then(txt=>cet6String=txt);
+        };
+        randWord.onclick=function(){
+            if(cet6String.length==0){
+                let s='请先点击读入单词';
+                select('footer').textContent=s;
+            }else{
+            let arr=cet6String.split('\r\n');
+            let rand=Math.floor(Math.random()*arr.length);
+            let str=arr[rand];
+            let begin=str.indexOf('\t');
+            let end=str.lastIndexOf('\t');
+            let en=str.slice(0,begin);
+            let pr=str.slice(begin+1,end);
+            let cn=str.slice(end+1);
+            select('p#en').textContent=en;
+            select('p#pr').textContent=pr;
+            select('p#cn').textContent=cn;
+        }
+        };
+        function select(selector){
+            let dom=document.querySelector(selector);
+            return dom;
+        }
     </script>
 </body>
 </html>
