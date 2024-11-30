@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>随机时间示例</title>
+</head>
+<body>
+    <!-- 按钮用于触发生成随机时间的事件 -->
+    <button id="generateTimeBtn">点击生成随机时间</button>
+    <!-- 显示生成的随机时间 -->
+    <div id="result"></div>
+    <script>
+        // 获取按钮元素
+        document.getElementById('generateTimeBtn').onclick = function () {
+            // 获取当前时间的时间戳（以毫秒为单位）
+            var currentTimestamp = Date.now();
+
+            // 设定一个时间范围，这里假设前后各1年（可以根据实际需求调整）
+            var oneYearInMs = 365 * 24 * 60 * 60 * 1000;
+
+            // 生成一个随机时间戳，在当前时间前后1年范围内
+            var randomTimestamp = currentTimestamp + Math.floor(Math.random() * (2 * oneYearInMs)) - oneYearInMs;
+
+            // 将随机时间戳转换为日期对象
+            var randomDate = new Date(randomTimestamp);
+
+            // 提取年份
+            var year = randomDate.getFullYear();
+            // 提取月份，并确保两位数格式
+            var month = String(randomDate.getMonth() + 1).padStart(2, '0');
+            // 提取日期，并确保两位数格式
+            var day = String(randomDate.getDate()).padStart(2, '0');
+            // 提取小时，并确保两位数格式
+            var hours = String(randomDate.getHours()).padStart(2, '0');
+            // 提取分钟，并确保两位数格式
+            var minutes = String(randomDate.getMinutes()).padStart(2, '0');
+            // 提取秒，并确保两位数格式
+            var seconds = String(randomDate.getSeconds()).padStart(2, '0');
+
+            // 将提取的时间部分组合成字符串
+            var randomTimeStr = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+            // 将生成的随机时间显示在结果区域
+            document.getElementById('result').innerHTML = randomTimeStr;
+        };
+    </script>
+</body>
+</html>
